@@ -1,0 +1,16 @@
+@startuml
+
+!include <C4/C4_Component>
+
+Component(MetricAdapter, "API", "visible API")
+Component(AdapterImpl, "Standard Implementation", "Java Library")
+Component(GRPC, "gRPC", "Java Library")
+Component(MetricService, "Service", "Service")
+Component(Database, "Database", "Application")
+
+Rel(MetricAdapter, AdapterImpl, "API")
+Rel(AdapterImpl, GRPC, "send metrics")
+Rel(GRPC, MetricService, "Metrics Service")
+Rel(MetricService, Database, "Save Data")
+
+@enduml

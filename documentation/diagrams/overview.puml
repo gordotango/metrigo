@@ -1,0 +1,18 @@
+@startuml
+
+!include <C4/C4_Component>
+
+Component(App, "Application", "consumer")
+Component(RipLib, "RIP Lib", "Java Library")
+Component(MetricAdapter, "Metric\nAdapter", "Java Library")
+Component(Rip_JVMTI, "RIP JVMTI", "JVMTI Agent")
+Component(Rip_PerfViz, "Performance\nVisualizer", "Application")
+
+Rel(App, RipLib, "mark metrics")
+Rel(RipLib, MetricAdapter, "send metrics")
+Rel(App, Rip_JVMTI, "Indirect invocation")
+Rel(Rip_JVMTI, Unknown, "-- Send somehow?")
+Rel(Rip_PerfViz, Rip_JVMTI, "get data")
+Rel(MetricAdapter, DataLake, "send")
+
+@enduml
