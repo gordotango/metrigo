@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 import org.metrigo.MetrigoStatistics;
 import org.metrigo.client.MetrigoMetricAccumulator;
@@ -95,14 +96,14 @@ public class MetrigoMetricsAccumulatorImpl implements MetrigoMetricAccumulator {
     }
     
     private volatile StatsHolder stats;
-    private final String name;
+    @Nonnull private final String name;
 
     /**
      * Constructor.
      * 
      * @param metricName the name for this metric.
      */
-    public MetrigoMetricsAccumulatorImpl(String metricName) {
+    public MetrigoMetricsAccumulatorImpl(@Nonnull String metricName) {
         this.stats = new StatsHolder();
         this.name = metricName;
     }
@@ -136,6 +137,7 @@ public class MetrigoMetricsAccumulatorImpl implements MetrigoMetricAccumulator {
     }
 
     @Override
+    @Nonnull
     public String getMetricName() {
         return this.name;
     }

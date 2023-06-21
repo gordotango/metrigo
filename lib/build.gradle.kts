@@ -20,6 +20,7 @@ dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
     testImplementation("org.hamcrest:hamcrest:2.2")
+    testImplementation("org.mockito:mockito-core:5.4.0")
 
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api("org.apache.commons:commons-math3:3.6.1")
