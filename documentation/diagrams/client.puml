@@ -1,0 +1,24 @@
+@startuml
+
+!include <C4/C4_Component>
+
+Component(Code, "Customer\nCode", "Java Code")
+Component(Sample, "Sample\nPoint", "Java Ifc")
+Component(MetricAcc, "Metric\nAccumulator", "Java Ifc")
+Component(MetricGatherer, "Metric\nGatherer\nThread")
+Component(MetricEnqueuer, "Metring\nEnqueuer", "Java thread")
+Component(MetricQueue, "Internal\nQueue")
+Component(MetricSendAdapter, "Send API", "visible API")
+Component(AdapterImpl, "Standard Implementation", "Java Library")
+Component(MessageQueue, "Message\nQueue", "Implementation")
+
+Rel(Code, Sample, "gather sample");
+Rel(Sample, MetricAcc, "send sample")
+Rel(MetricGatherer, MetricAcc, "get stats")
+Rel(MetricGatherer, MetricQueue, "put stats")
+Rel(MetricEnqueuer, MetricQueue, "get stats")
+Rel(MetricEnqueuer, MetricSendAdapter, "send")
+Rel(MetricSendAdapter, AdapterImpl, "impl")
+Rel(AdapterImpl, MessageQueue, "send")
+
+@enduml

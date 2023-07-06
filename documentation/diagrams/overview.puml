@@ -3,16 +3,14 @@
 !include <C4/C4_Component>
 
 Component(App, "Application", "consumer")
-Component(RipLib, "RIP Lib", "Java Library")
-Component(MetricAdapter, "Metric\nAdapter", "Java Library")
-Component(Rip_JVMTI, "RIP JVMTI", "JVMTI Agent")
-Component(Rip_PerfViz, "Performance\nVisualizer", "Application")
+Component(MetrigoClient, "Metrigo\nClient\nLib", "Java Library")
+Component(MetricAdapter, "Metric\nSend\nAdapter", "Java Library")
+Component(MetricDB, "Metric\nDatabase", "DB (Mongo/etc.)")
+Component(Metrigo_PerfViz, "Performance\nVisualizer", "Application")
 
-Rel(App, RipLib, "mark metrics")
-Rel(RipLib, MetricAdapter, "send metrics")
-Rel(App, Rip_JVMTI, "Indirect invocation")
-Rel(Rip_JVMTI, Unknown, "-- Send somehow?")
-Rel(Rip_PerfViz, Rip_JVMTI, "get data")
-Rel(MetricAdapter, DataLake, "send")
+Rel(App, MetrigoClient, "mark metrics")
+Rel(MetrigoClient, MetricAdapter, "send metrics")
+Rel(MetricAdapter, MetricDB, "store metrics")
+Rel(Metrigo_PerfViz, MetricDB, "get data")
 
 @enduml

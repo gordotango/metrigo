@@ -22,7 +22,7 @@ import org.metrigo.client.MetrigoSample;
 import com.google.common.annotations.VisibleForTesting;
 
 /**
- * Implementation for a metrigo sampler.
+ * Single threaded implementation for a metrigo sampler.
  * 
  * This implementation is the non-thread safe implementation. It uses the more
  * accurate, but thread specific Nano Time counter from Java. There is careful

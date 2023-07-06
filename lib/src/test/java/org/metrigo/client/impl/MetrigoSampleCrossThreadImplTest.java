@@ -31,28 +31,30 @@ public class MetrigoSampleCrossThreadImplTest {
     @ParameterizedTest
     @CsvSource({"1,1000", "0,0", "2,2000", "-1,1"})
     void testAddSample(long inputNanos, long expected) {
-        MetrigoSampleCrossThreadImpl underTest = new MetrigoSampleCrossThreadImpl();
-        MetrigoMetricAccumulator accumulator = mock(MetrigoMetricAccumulator.class);
-        underTest.addSample(accumulator, inputNanos);
-        verify(accumulator, times(1)).addSample(expected);
-        verifyNoMoreInteractions(accumulator);
+        try (MetrigoSampleCrossThreadImpl underTest = new MetrigoSampleCrossThreadImpl()) {
+            MetrigoMetricAccumulator accumulator = mock(MetrigoMetricAccumulator.class);
+            underTest.addSample(accumulator, inputNanos);
+            verify(accumulator, times(1)).addSample(expected);
+            verifyNoMoreInteractions(accumulator);
+        }
     }
 
     @Test
     void testCloseWithError() {
-        MetrigoSampleCrossThreadImpl underTest = new MetrigoSampleCrossThreadImpl();
-        MetrigoMetricAccumulator accumulator = mock(MetrigoMetricAccumulator.class);
-        underTest.setErrorStats(accumulator);
-        underTest.close();
-        verify(accumulator, times(1)).addSample(anyLong()); 
-        verifyNoMoreInteractions(accumulator);
+        try (MetrigoSampleCrossThreadImpl underTest = new MetrigoSampleCrossThreadImpl()) {
+            MetrigoMetricAccumulator accumulator = mock(MetrigoMetricAccumulator.class);
+            underTest.setErrorStats(accumulator);
+            underTest.close();
+            verify(accumulator, times(1)).addSample(anyLong()); 
+            verifyNoMoreInteractions(accumulator);
+        }
     }
 
     @Test
     void testCloseWithoutError() {
         MetrigoSampleCrossThreadImpl underTest = new MetrigoSampleCrossThreadImpl();
         underTest.close();
-        // there is really nothing to test here, as there is nothing to do.
+        // there is really nothing to test here, as there is nothing set.
     }
 
     @Test

@@ -1,4 +1,20 @@
 package org.metrigo.client.impl;
+/*
+ * This file is part of Metrigo.
+ * 
+ * Metrigo is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * Metrigo is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along
+ * with Metrigo. If not, see <https://www.gnu.org/licenses/>.
+ */
 
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.mock;
@@ -16,11 +32,12 @@ public class MetrigoSampleSingleThreadImplTest {
     @CsvSource({"1,0", "500000,0", "500001,1", "1499999,1",
                 "1500000,2", "2500000,2"})
     void testAddSample(long inputNanos, long expected) {
-        MetrigoSampleSingleThreadImpl underTest = new MetrigoSampleSingleThreadImpl();
-        MetrigoMetricAccumulator accumulator = mock(MetrigoMetricAccumulator.class);
-        underTest.addSample(accumulator, inputNanos);
-        verify(accumulator, times(1)).addSample(expected);
-        verifyNoMoreInteractions(accumulator);
+        try (MetrigoSampleSingleThreadImpl underTest = new MetrigoSampleSingleThreadImpl()) {
+            MetrigoMetricAccumulator accumulator = mock(MetrigoMetricAccumulator.class);
+            underTest.addSample(accumulator, inputNanos);
+            verify(accumulator, times(1)).addSample(expected);
+            verifyNoMoreInteractions(accumulator);
+        }
     }
 
     @Test

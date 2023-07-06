@@ -60,6 +60,14 @@ public class MetrigoSampleCrossThreadImpl implements MetrigoSample {
 
     private static long MICROS_PER_MILLI = 1000L;
 
+    /**
+     * Add a sample (in milli-seconds) to an accumulator.
+     * 
+     * This has handling for negative values, though it is unclear if that can ever happen.
+     * 
+     * @param stats the accumulator that we are updating.
+     * @param milliTime the difference from the start time for {@link System.currentTimeMillis()}
+     */
     @VisibleForTesting
     void addSample(MetrigoMetricAccumulator stats, long milliTime) {
         long microTime = milliTime * MICROS_PER_MILLI;
